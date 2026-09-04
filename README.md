@@ -46,7 +46,7 @@ groups so people can post and read notices.
 ```
 app.py                  Flask app: routes, DB setup
 templates/               HTML pages (Jinja2)
-static/css/style.css     Styling
+static/css/style.css     Styling 
 static/uploads/          Uploaded notice photos (created automatically)
 board.db                 SQLite database (created automatically on first run)
 requirements.txt         Python dependencies
@@ -75,3 +75,6 @@ dashboard rather than hardcoding them in the code.
 Once logged in at `/admin`, you'll see every notice in a table and can
 delete any of them (this also removes their uploaded photo). Logging out
 clears your admin session.
+
+
+Live web : https://village-board.onrender.com/
