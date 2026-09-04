@@ -76,5 +76,5 @@ Once logged in at `/admin`, you'll see every notice in a table and can
 delete any of them (this also removes their uploaded photo). Logging out
 clears your admin session.
 
-
+you can see website
 Live web : https://village-board.onrender.com/
