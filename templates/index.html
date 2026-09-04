@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}गावफलक — Village Notice Board{% endblock %}
+
+{% block content %}
+  <section class="toolbar">
+    <form class="search-form" method="get" action="{{ url_for('index') }}">
+      {% if active_category %}<input type="hidden" name="category" value="{{ active_category }}">{% endif %}
+      <input
+        type="text"
+        name="q"
+        placeholder="Search notices…"
+        value="{{ search }}"
+        aria-label="Search notices"
+      >
+      <button type="submit">Search</button>
+    </form>
+
+    <nav class="category-filter" aria-label="Filter by category">
+      <a href="{{ url_for('index', q=search) }}" class="chip {{ 'chip--active' if not active_category else '' }}">All</a>
+      {% for key, label in categories %}
+        <a href="{{ url_for('index', category=key, q=search) }}" class="chip chip--{{ key }} {{ 'chip--active' if active_category == key else '' }}">{{ label }}</a>
+      {% endfor %}
+    </nav>
+  </section>
+
+  {% if notices %}
+    <section class="board-grid">
+      {% for notice in notices %}
+        <a class="notice-card notice-card--{{ notice['category'] }}" href="{{ url_for('view_notice', notice_id=notice['id']) }}">
+          <span class="notice-card__pin" aria-hidden="true"></span>
+          <span class="notice-card__tag">{{ dict(categories)[notice['category']] if notice['category'] in dict(categories) else notice['category'] }}</span>
+          {% if notice['image_filename'] %}
+            <img class="notice-card__img" src="{{ url_for('static', filename='uploads/' ~ notice['image_filename']) }}" alt="">
+          {% endif %}
+          <h2 class="notice-card__title">{{ notice['title'] }}</h2>
+          <p class="notice-card__excerpt">{{ notice['body'][:120] }}{% if notice['body']|length > 120 %}…{% endif %}</p>
+          <div class="notice-card__meta">
+            <span>{{ notice['posted_by'] }}</span>
+            <span>{{ notice['created_at'][:10] }}</span>
+          </div>
+        </a>
+      {% endfor %}
+    </section>
+  {% else %}
+    <div class="empty-board">
+      <p>No notices here yet.</p>
+      <a class="btn btn--post" href="{{ url_for('post_notice') }}">Be the first to post</a>
+    </div>
+  {% endif %}
+{% endblock %}

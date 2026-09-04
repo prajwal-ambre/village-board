@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ notice['title'] }} — गावफलक{% endblock %}
+
+{% block content %}
+  <article class="notice-detail notice-detail--{{ notice['category'] }}">
+    <a class="back-link" href="{{ url_for('index') }}">&larr; Back to board</a>
+
+    <span class="notice-card__tag">{{ categories.get(notice['category'], notice['category']) }}</span>
+    <h1>{{ notice['title'] }}</h1>
+    <div class="notice-detail__meta">
+      <span>Posted by {{ notice['posted_by'] }}</span>
+      <span>{{ notice['created_at'][:16].replace('T', ' ') }} UTC</span>
+    </div>
+
+    {% if notice['image_filename'] %}
+      <img class="notice-detail__img" src="{{ url_for('static', filename='uploads/' ~ notice['image_filename']) }}" alt="">
+    {% endif %}
+
+    <p class="notice-detail__body">{{ notice['body'] }}</p>
+  </article>
+{% endblock %}

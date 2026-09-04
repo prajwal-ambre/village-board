@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Admin login — गावफलक{% endblock %}
+
+{% block content %}
+  <section class="form-sheet">
+    <h1>Admin login</h1>
+    <p class="form-sheet__hint">Only for removing spam or outdated notices from the board.</p>
+
+    <form method="post" class="notice-form">
+      <label>
+        Password
+        <input type="password" name="password" required autofocus>
+      </label>
+      <button type="submit" class="btn btn--post btn--wide">Log in</button>
+    </form>
+  </section>
+{% endblock %}

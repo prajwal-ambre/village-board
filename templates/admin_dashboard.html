@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Admin — गावफलक{% endblock %}
+
+{% block content %}
+  <div class="admin-bar">
+    <h1>All notices ({{ notices|length }})</h1>
+    <form method="post" action="{{ url_for('admin_logout') }}">
+      <button type="submit" class="btn btn--ghost">Log out</button>
+    </form>
+  </div>
+
+  {% if notices %}
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Posted by</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for notice in notices %}
+          <tr>
+            <td><a href="{{ url_for('view_notice', notice_id=notice['id']) }}">{{ notice['title'] }}</a></td>
+            <td>{{ categories.get(notice['category'], notice['category']) }}</td>
+            <td>{{ notice['posted_by'] }}</td>
+            <td>{{ notice['created_at'][:10] }}</td>
+            <td>
+              <form method="post" action="{{ url_for('delete_notice', notice_id=notice['id']) }}" onsubmit="return confirm('Remove this notice from the board?');">
+                <button type="submit" class="btn btn--danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty-board">
+      <p>No notices posted yet.</p>
+    </div>
+  {% endif %}
+{% endblock %}

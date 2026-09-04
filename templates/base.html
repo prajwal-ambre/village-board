@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}गावफलक — Village Notice Board{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="board-header">
+    <div class="board-header__inner">
+      <a class="board-header__brand" href="{{ url_for('index') }}">
+        <span class="board-header__mark">गा</span>
+        <span class="board-header__text">
+          <span class="board-header__title">गावफलक</span>
+          <span class="board-header__sub">Village Notice Board</span>
+        </span>
+      </a>
+      <div class="board-header__actions">
+        <a class="btn btn--post" href="{{ url_for('post_notice') }}">Post a notice</a>
+        <a class="header-admin-link" href="{{ url_for('admin_dashboard') if session.get('is_admin') else url_for('admin_login') }}">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="board-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash--{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="board-footer">
+    <p>Shared board for everyone in the village. Please post real, respectful information.</p>
+  </footer>
+</body>
+</html>

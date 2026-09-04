@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Notice not found — गावफलक{% endblock %}
+
+{% block content %}
+  <div class="empty-board">
+    <p>That notice isn't on the board anymore.</p>
+    <a class="btn btn--post" href="{{ url_for('index') }}">Back to board</a>
+  </div>
+{% endblock %}

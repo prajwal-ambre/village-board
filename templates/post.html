@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Post a notice — गावफलक{% endblock %}
+
+{% block content %}
+  <section class="form-sheet">
+    <h1>Post a notice</h1>
+    <p class="form-sheet__hint">Anyone can post. Please keep it honest and useful for the village.</p>
+
+    <form method="post" enctype="multipart/form-data" class="notice-form">
+      <label>
+        Title
+        <input type="text" name="title" maxlength="150" required value="{{ form.get('title', '') }}" placeholder="e.g. Water supply cut on Friday">
+      </label>
+
+      <label>
+        Category
+        <select name="category" required>
+          <option value="" disabled {{ 'selected' if not form.get('category') else '' }}>Choose a category</option>
+          {% for key, label in categories %}
+            <option value="{{ key }}" {{ 'selected' if form.get('category') == key else '' }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        Details
+        <textarea name="body" rows="6" required placeholder="Write the full notice here…">{{ form.get('body', '') }}</textarea>
+      </label>
+
+      <label>
+        Your name <span class="optional">(optional)</span>
+        <input type="text" name="posted_by" maxlength="80" value="{{ form.get('posted_by', '') }}" placeholder="Leave blank to post anonymously">
+      </label>
+
+      <label>
+        Photo <span class="optional">(optional)</span>
+        <input type="file" name="image" accept="image/png, image/jpeg, image/gif, image/webp">
+      </label>
+
+      <button type="submit" class="btn btn--post btn--wide">Pin it to the board</button>
+    </form>
+  </section>
+{% endblock %}
